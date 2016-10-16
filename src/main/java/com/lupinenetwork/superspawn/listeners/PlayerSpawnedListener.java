@@ -45,6 +45,7 @@ public class PlayerSpawnedListener implements Listener {
         try {
             Location spawn = manager.getGroupSpawn(perms.getPrimaryGroup(evt.getPlayer()), evt.getPlayer().getWorld().getName());
             if (spawn == null) return;
+            evt.getPlayer().sendMessage("onPlayerJoin");
             evt.getPlayer().teleport(spawn);
         } catch (SuperSpawnDatabaseException ex) {
             throw new RuntimeException(ex);
@@ -56,6 +57,7 @@ public class PlayerSpawnedListener implements Listener {
         try {
             Location spawn = manager.getGroupSpawn(perms.getPrimaryGroup(evt.getPlayer()), evt.getPlayer().getWorld().getName());
             if (spawn == null) return;
+            evt.getPlayer().sendMessage("onPlayerRespawn");
             evt.getPlayer().teleport(spawn);
         } catch (SuperSpawnDatabaseException ex) {
             throw new RuntimeException(ex);
@@ -70,6 +72,7 @@ public class PlayerSpawnedListener implements Listener {
         try {
             Location spawn = manager.getGroupSpawn(perms.getPrimaryGroup(evt.getPlayer()), evt.getTo().getWorld().getName());
             if (spawn == null) return;
+            evt.getPlayer().sendMessage("onPlayerChangeWorld");
             evt.getPlayer().teleport(spawn);
         } catch (SuperSpawnDatabaseException ex) {
             throw new RuntimeException(ex);
