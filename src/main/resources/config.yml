@@ -1,0 +1,12 @@
+mysql:
+    driver: com.mysql.jdbc.Driver
+    # Change this to your actual database url
+    url: jdbc:mysql://localhost/test
+    username: user
+    password: secure
+    
+    # Where everything is stored
+    table-name: superspawn
+
+messages:
+    sender-not-player: "&cYou must be a player to execute this command!"
