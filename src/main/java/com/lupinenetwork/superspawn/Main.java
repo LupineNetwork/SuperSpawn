@@ -18,6 +18,7 @@ package com.lupinenetwork.superspawn;
 
 import com.lupinenetwork.superspawn.commands.SuperSpawnCommand;
 import com.lupinenetwork.superspawn.database.SuperSpawnManager;
+import com.lupinenetwork.superspawn.listeners.PlayerSpawnedListener;
 import com.lupinenetwork.superspawn.util.C;
 import com.lupinenetwork.superspawn.util.SQLUtil;
 import java.sql.Driver;
@@ -49,12 +50,16 @@ public class Main extends JavaPlugin {
         if (!primaryTableName.matches("^[A-Za-z_]*$"))
             primaryTableName = Constants.DEFAULT_PRIMARY_TABLE_NAME;
         
+        SuperSpawnManager manager = new SuperSpawnManager(getServer(), primaryTableName, url, username, password, driver);
+        
         getCommand("superspawn").setExecutor(
                 new SuperSpawnCommand(getServer(), 
-                new SuperSpawnManager(getServer(), primaryTableName, url, username, password, driver),
+                manager,
                 C.c(getConfig().getString("messages.sender-not-player", "&cYou must be a player to execute this command!"))));
         
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         Permission perms = rsp.getProvider();
+        
+        getServer().getPluginManager().registerEvents(new PlayerSpawnedListener(manager, perms), this);
     }
 }

@@ -26,7 +26,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Location;
 import org.bukkit.event.player.PlayerRespawnEvent;
-abstract 
+
 /**
  *
  * @author Majora320 &lt;Majora320@gmail.com&gt;
