@@ -25,6 +25,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Location;
+import org.bukkit.event.player.PlayerRespawnEvent;
 abstract 
 /**
  *
@@ -41,6 +42,17 @@ public class PlayerSpawnedListener implements Listener {
     
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent evt) {
+        try {
+            Location spawn = manager.getGroupSpawn(perms.getPrimaryGroup(evt.getPlayer()), evt.getPlayer().getWorld().getName());
+            if (spawn == null) return;
+            evt.getPlayer().teleport(spawn);
+        } catch (SuperSpawnDatabaseException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerRespawn(PlayerRespawnEvent evt) {
         try {
             Location spawn = manager.getGroupSpawn(perms.getPrimaryGroup(evt.getPlayer()), evt.getPlayer().getWorld().getName());
             if (spawn == null) return;
