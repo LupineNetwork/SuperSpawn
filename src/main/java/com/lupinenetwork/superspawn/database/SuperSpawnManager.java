@@ -72,7 +72,7 @@ public class SuperSpawnManager {
     public void addGroupSpawn(String group, Location loc) throws SuperSpawnDatabaseException {
         deleteGroupSpawn(group, loc.getWorld().getName());
         try (Connection conn = openConnection();
-                PreparedStatement insert = conn.prepareStatement("INSERT INTO " + primaryTableName + " (group_name, world_name, x, y, z, pich, yaw) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+                PreparedStatement insert = conn.prepareStatement("INSERT INTO " + primaryTableName + " (group_name, world_name, x, y, z, pitch, yaw) VALUES (?, ?, ?, ?, ?, ?, ?)")) {
             insert.setString(1, group);
             insert.setString(2, loc.getWorld().getName());
             insert.setDouble(3, loc.getX());
