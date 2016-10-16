@@ -57,6 +57,11 @@ public class Main extends JavaPlugin {
                 manager,
                 C.c(getConfig().getString("messages.sender-not-player", "&cYou must be a player to execute this command!"))));
         
+        getCommand("spawn").setExecutor(
+                new SuperSpawnCommand(getServer(), 
+                manager,
+                C.c(getConfig().getString("messages.sender-not-player", "&cYou must be a player to execute this command!"))));
+        
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         Permission perms = rsp.getProvider();
         
