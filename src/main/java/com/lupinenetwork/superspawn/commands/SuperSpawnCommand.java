@@ -56,40 +56,78 @@ public class SuperSpawnCommand implements CommandExecutor {
         if ((args.length > 1 && args.length < 4) || args.length > 5)
             return false;
         
-        if (args.length > 4) {
-            try {
-                x = Float.parseFloat(args[1]);
-                y = Float.parseFloat(args[2]);
-                z = Float.parseFloat(args[3]);
-            } catch (NumberFormatException ex) {
-                return false;
+        if (group.equals("*")) {
+            if (args.length >= 2) {
+                world = args[1];
+            } else {
+                if (sender instanceof Player) {
+                    world = ((Player)sender).getWorld().getName();
+                } else {
+                    sender.sendMessage(senderNotPlayerMsg);
+                    return true;
+                }                
+            }
+            
+            if (args.length == 5) {
+                try {
+                    x = Float.parseFloat(args[1]);
+                    y = Float.parseFloat(args[2]);
+                    z = Float.parseFloat(args[3]);
+                } catch (NumberFormatException ex) {
+                    return false;
+                }
+            } else {
+                if (sender instanceof Player) {
+                    Location loc = ((Player)sender).getLocation();
+
+                    x = loc.getX();
+                    y = loc.getY();
+                    z = loc.getZ();
+
+                    havePitchAndYaw = true;
+                    pitch = loc.getPitch();
+                    yaw = loc.getYaw();
+                } else {
+                    sender.sendMessage(senderNotPlayerMsg);
+                    return true;
+                }
             }
         } else {
-            if (sender instanceof Player) {
-                Location loc = ((Player)sender).getLocation();
-                
-                x = loc.getX();
-                y = loc.getY();
-                z = loc.getZ();
-                
-                havePitchAndYaw = true;
-                pitch = loc.getPitch();
-                yaw = loc.getYaw();
+            if (args.length >= 4) {
+                try {
+                    x = Float.parseFloat(args[1]);
+                    y = Float.parseFloat(args[2]);
+                    z = Float.parseFloat(args[3]);
+                } catch (NumberFormatException ex) {
+                    return false;
+                }
             } else {
-                sender.sendMessage(senderNotPlayerMsg);
-                return true;
+                if (sender instanceof Player) {
+                    Location loc = ((Player)sender).getLocation();
+
+                    x = loc.getX();
+                    y = loc.getY();
+                    z = loc.getZ();
+
+                    havePitchAndYaw = true;
+                    pitch = loc.getPitch();
+                    yaw = loc.getYaw();
+                } else {
+                    sender.sendMessage(senderNotPlayerMsg);
+                    return true;
+                }
             }
-        }
         
-        if (args.length == 5)
-            world = args[4];
-        else {
-            if (sender instanceof Player) {
-                world = ((Player)sender).getWorld().getName();
-            } else {
-                sender.sendMessage(senderNotPlayerMsg);
-                return true;
-            }
+            if (args.length == 5)
+                world = args[4];
+            else {
+                if (sender instanceof Player) {
+                    world = ((Player)sender).getWorld().getName();
+                } else {
+                    sender.sendMessage(senderNotPlayerMsg);
+                    return true;
+                }
+            }    
         }
         
         try {
@@ -103,4 +141,5 @@ public class SuperSpawnCommand implements CommandExecutor {
         
         return true;
     }
+   
 }

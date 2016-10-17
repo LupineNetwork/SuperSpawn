@@ -10,7 +10,7 @@ commands:
     superspawn:
         description: Sets player spawns based on groups
         permissions: superspawn.use
-        usage: "§cUsage: /superspawn [group=* [x=~ y=~ z=~ [world=this]]]"
+        usage: "§cUsage: /superspawn group [x=~ y=~ z=~ [world=this]]\n§cUsage: /superspawn * [world=this] [x=~ y=~ z=~]"
     spawn:
         description: Returns you to your spawn
         permissions: superspawn.spawncommand
