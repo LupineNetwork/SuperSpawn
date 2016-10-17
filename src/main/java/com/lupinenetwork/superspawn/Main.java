@@ -16,6 +16,7 @@
  */
 package com.lupinenetwork.superspawn;
 
+import com.lupinenetwork.superspawn.commands.SpawnCommand;
 import com.lupinenetwork.superspawn.commands.SuperSpawnCommand;
 import com.lupinenetwork.superspawn.database.SuperSpawnManager;
 import com.lupinenetwork.superspawn.listeners.PlayerSpawnedListener;
@@ -52,18 +53,18 @@ public class Main extends JavaPlugin {
         
         SuperSpawnManager manager = new SuperSpawnManager(getServer(), primaryTableName, url, username, password, driver);
         
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        Permission perms = rsp.getProvider();
+        
         getCommand("superspawn").setExecutor(
                 new SuperSpawnCommand(getServer(), 
                 manager,
                 C.c(getConfig().getString("messages.sender-not-player", "&cYou must be a player to execute this command!"))));
         
         getCommand("spawn").setExecutor(
-                new SuperSpawnCommand(getServer(), 
-                manager,
+                new SpawnCommand(manager, 
+                perms,
                 C.c(getConfig().getString("messages.sender-not-player", "&cYou must be a player to execute this command!"))));
-        
-        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        Permission perms = rsp.getProvider();
         
         getServer().getPluginManager().registerEvents(new PlayerSpawnedListener(manager, perms), this);
     }
