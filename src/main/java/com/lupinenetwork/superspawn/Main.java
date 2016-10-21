@@ -62,9 +62,13 @@ public class Main extends JavaPlugin {
                 C.c(getConfig().getString("messages.sender-not-player", "&cYou must be a player to execute this command!"))));
         
         getCommand("spawn").setExecutor(
-                new SpawnCommand(manager, 
-                perms,
-                C.c(getConfig().getString("messages.sender-not-player", "&cYou must be a player to execute this command!"))));
+                new SpawnCommand(
+                        getServer(),
+                        manager, 
+                        perms,
+                        C.c(getConfig().getString("messages.must-be-player", "&cYou must be a player to execute this command!")),
+                        C.c(getConfig().getString("messages.no-such-player", "&cThe player {0} does not exist!")),
+                        C.c(getConfig().getString("messages.no-perms", "&cInsufficient permissions to do /spawn player!"))));
         
         getServer().getPluginManager().registerEvents(new PlayerSpawnedListener(manager, perms), this);
     }

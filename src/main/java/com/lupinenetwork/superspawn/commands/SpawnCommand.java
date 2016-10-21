@@ -18,8 +18,10 @@ package com.lupinenetwork.superspawn.commands;
 
 import com.lupinenetwork.superspawn.database.SuperSpawnDatabaseException;
 import com.lupinenetwork.superspawn.database.SuperSpawnManager;
+import java.text.MessageFormat;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,23 +32,44 @@ import org.bukkit.entity.Player;
  * @author Majora320 &lt;Majora320@gmail.com&gt;
  */
 public class SpawnCommand implements CommandExecutor {
+    private final Server server;
     private final SuperSpawnManager manager;
     private final Permission perms;
     private final String senderNotPlayerMsg;
+    private final String noSuchPlayerMsg;
+    private final String noPermissionsMsg;
     
-    public SpawnCommand(SuperSpawnManager manager, Permission perms, String senderNotPlayerMsg) {
+    public SpawnCommand(Server server, SuperSpawnManager manager, Permission perms, String senderNotPlayerMsg, String noSuchPlayerMsg, String noPermissionsMsg) {
+        this.server = server;
         this.manager = manager;
         this.perms = perms;
         this.senderNotPlayerMsg = senderNotPlayerMsg;
+        this.noSuchPlayerMsg = noSuchPlayerMsg;
+        this.noPermissionsMsg = noPermissionsMsg;
     }
     
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player))
-            sender.sendMessage(senderNotPlayerMsg);
+        Player player;
         
-        Player player = (Player)sender;
-        
+        if (args.length < 1) {
+            if (!(sender instanceof Player))
+                sender.sendMessage(senderNotPlayerMsg);
+
+            player = (Player)sender;
+        } else {
+            if (!sender.hasPermission("superspawn.sendplayertospawn")) {
+                sender.sendMessage(noPermissionsMsg);
+                return true;
+            }
+            player = server.getPlayer(args[0]);
+            
+            if (player == null) {
+                sender.sendMessage(MessageFormat.format(noSuchPlayerMsg, args[0]));
+                return true;
+            }
+        }
+
         try {
             Location spawn = manager.getGroupSpawn(perms.getPrimaryGroup(player), player.getWorld().getName());
             if (spawn == null) return true;

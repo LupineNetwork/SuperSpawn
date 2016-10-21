@@ -14,7 +14,7 @@ commands:
     spawn:
         description: Returns you to your spawn
         permissions: superspawn.spawncommand
-        usage: "§cUsage: /spawn"
+        usage: "§cUsage: /spawn [player]"
 
 permissions:
     superspawn.use:
@@ -22,4 +22,6 @@ permissions:
     superspawn.spawncommand:
         description: Lets you use /spawn
         default: true
+    superspawn.sendplayertospawn:
+        description: Lets you use /spawn player
 

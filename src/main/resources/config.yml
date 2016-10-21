@@ -9,4 +9,7 @@ mysql:
     table-name: superspawn
 
 messages:
-    sender-not-player: "&cYou must be a player to execute this command!"
+    must-be-player: "&cYou must be a player to execute this command!"
+    no-such-player: "&cThe player {0} does not exist!"
+    # Triggered when the player does not have the "superspawn.sendplayertospawn" node
+    no-perms: "&cInsufficient permissions to do /spawn player!"
