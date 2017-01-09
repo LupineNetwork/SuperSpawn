@@ -41,7 +41,7 @@ public class PlayerSpawnedListener implements Listener {
     }
     
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerJoin(PlayerJoinEvent evt) {
+    public void onPlayerJoin(Player evt) {
         try {
             Location spawn = manager.getGroupSpawn(perms.getPrimaryGroup(evt.getPlayer()), evt.getPlayer().getWorld().getName());
             if (spawn == null) return;

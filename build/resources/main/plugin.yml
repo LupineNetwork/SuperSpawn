@@ -1,0 +1,27 @@
+name: SuperSpawn
+version: 0.1.0
+descrition: Sets player spawns based on groups
+author: Majora320
+website: http://lupinenetwork.com
+main: com.lupinenetwork.superspawn.Main
+depends: [VaultAPI]
+
+commands:
+    superspawn:
+        description: Sets player spawns based on groups
+        permissions: superspawn.use
+        usage: "§cUsage: /superspawn group [x=~ y=~ z=~ [world=this]]\n§cUsage: /superspawn * [world=this] [x=~ y=~ z=~]"
+    spawn:
+        description: Returns you to your spawn
+        permissions: superspawn.spawncommand
+        usage: "§cUsage: /spawn [player]"
+
+permissions:
+    superspawn.use:
+        description: Lets you use the /superspawn command
+    superspawn.spawncommand:
+        description: Lets you use /spawn
+        default: true
+    superspawn.sendplayertospawn:
+        description: Lets you use /spawn player
+
