@@ -22,6 +22,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -34,12 +35,12 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public class PlayerSpawnedListener implements Listener {
     private final SuperSpawnManager manager;
     private final Permission perms;
-    
+
     public PlayerSpawnedListener(SuperSpawnManager manager, Permission perms) {
         this.manager = manager;
         this.perms = perms;
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerJoinEvent evt) {
         try {
@@ -50,7 +51,7 @@ public class PlayerSpawnedListener implements Listener {
             throw new RuntimeException(ex);
         }
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerRespawn(PlayerRespawnEvent evt) {
         try {
@@ -61,12 +62,12 @@ public class PlayerSpawnedListener implements Listener {
             throw new RuntimeException(ex);
         }
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerChangeWorld(PlayerMoveEvent evt) {
         if (evt.getFrom().getWorld().equals(evt.getTo().getWorld()))
             return;
-        
+
         try {
             Location spawn = manager.getGroupSpawn(perms.getPrimaryGroup(evt.getPlayer()), evt.getTo().getWorld().getName());
             if (spawn == null) return;
